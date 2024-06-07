@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PageController;
 
 /* 
     Rout::get    | READ
@@ -10,19 +11,20 @@ use Illuminate\Support\Facades\Route;
     Rout::UPDATE | UPDATE
 */
 
-Route::get('/', function () {
-    return view('welcome');
+/* Route::get('/', [PageController::class, 'home'])->name('home');
+
+Route::get('blog', [PageController::class, 'blog'])->name('blog');
+
+Route::get('blog/{slug}', [PageController::class, 'post'])->name('post'); */
+
+Route::controller(PageController::class)->group(function () {
+
+    Route::get('/', 'home')->name('home');
+    Route::get('blog', 'blog')->name('blog');
+    Route::get('blog/{post:slug}', 'post')->name('post'); 
 });
 
-Route::get('/blog', function () {
-    return 'Listado de publicaciones';
-});
-
-Route::get('/blog/{slug}', function ($slug) {
-    return $slug;
-});
-
-Route::get('find', function (Request $request) {
+/* Route::get('find', function (Request $request) {
     return $request->all(); 
-});
+})->name('post'); */
 
